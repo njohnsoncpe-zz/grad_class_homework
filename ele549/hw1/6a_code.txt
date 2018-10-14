@@ -1,0 +1,15 @@
+%% Simulation 1
+clc; clear;
+p = 0.3; % p(success)
+n = 10; % Num trials
+k = 0:1:n;
+
+probs_calcd = zeros(1,11);
+for i = 0:n
+    probs_calcd(i+1) = bernoulli_prob(n,p,i)
+end
+
+bar(probs_calcd)
+title("calculated probabilites")
+
+
