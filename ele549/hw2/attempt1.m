@@ -6,33 +6,38 @@ N_arr = [40 100];
 TTMA = zeros(numel(N_arr),T); % Total Transmissions Moving Average
 
 for idx = 1:numel(N_arr)
-    numLambda = N_arr(idx);
-    P = ones(numLambda,T);
-    Ev = zeros(numLambda,1);
+    numUser = N_arr(idx);
+    P = ones(numUser,T);
+    P(:,1) = ones(numUser,1);
+    Ev = zeros(numUser,1);
     total_transmissions = zeros(1,T);
 
     for t = 1:(T-1)
-        for n = 1:numLambda
+        for n = 1:numUser
             Ev(n,1) = rand < P(n,t);
         end
         total_transmissions(1,t) = sum(Ev(:,1));
         if total_transmissions(1,t) == 0
             P(:,t+1) = min(1.2*P(:,t),1);
         elseif total_transmissions(1,t) > 1
-            P(:,t+1) = 0.8*P(:,t);
+            P(:,t+1) = 0.8.*P(:,t);
+        else
+            P(:,t+1) = P(:,t);
         end
         TTMA(idx,t) = sum(total_transmissions(1,1:t))/t;
     end
+    TTMA(idx,T) = sum(total_transmissions(1,1:T))/T;
 end
 
 %% Prob #2 Throughput Graphing
 t = 1:T;
 plot(t,TTMA(1,:))
 hold on
+plot(t,TTMA(2,:))
 xlabel("Time (t)")
 ylabel("Throughput (transmissions/t)")
 title("Running Average of Throughput for N = 40, N = 100")
-plot(t,TTMA(2,:))
+
 legend("N = 40","N = 100")
 hold off
 
@@ -151,14 +156,42 @@ end
 
 %% Geo/D/1, G/G/1, G/X/1 comparison graphing
 hold on;
-plot(lambda,geoMeanQueueLen, 'ro')
+plot(lambda,geoMeanQueueLen, 'rx')
 plot(lambda,detMeanQueueLen, 'bx')
-plot(lambda,expMeanQueueLen(1,:), 'go')
-plot(lambda,expMeanQueueLen(2,:), 'gx')
+plot(lambda,expMeanQueueLen(1,:), 'cx')
+plot(lambda,expMeanQueueLen(2,:), 'mx')
 plot(lambda,geoExpectedQueueLen,'r')
 plot(lambda,detExpectedQueueLen,'b')
 xlabel("\lambda")
 ylabel("E(\lambda) (Average Queue Length)")
 title("Geo/Geo/1 vs Geo/D/1 vs Geo/X/1");
 legend("mean simulated queue len (G/G/1)","mean simulated queue len (G/D/1)","mean simulated queue len (G/X/1,M = 1)","mean simulated queue len (G/X/1,M = 5)","mean expected queue len (G/G/1)","mean expected queue len (G/D/1)",'Location','NorthWest');
+hold off;
+
+%% Bonus
+subplot(2,1,1)
+hold on;
+plot(lambda,geoMeanQueueLen, 'rx')
+plot(lambda,detMeanQueueLen, 'bx')
+plot(lambda,expMeanQueueLen(1,:), 'cx')
+plot(lambda,expMeanQueueLen(2,:), 'mx')
+plot(lambda,geoExpectedQueueLen,'r')
+plot(lambda,detExpectedQueueLen,'b')
+xlabel("\lambda")
+ylabel("E(\lambda) (Average Queue Length)")
+title("Geo/Geo/1 vs Geo/D/1 vs Geo/X/1");
+legend("mean simulated queue len (G/G/1)","mean simulated queue len (G/D/1)","mean simulated queue len (G/X/1,M = 1)","mean simulated queue len (G/X/1,M = 5)","mean expected queue len (G/G/1)","mean expected queue len (G/D/1)",'Location','NorthWest');
+hold off;
+subplot(2,1,2)
+hold on;
+plot(lambda,(geoMeanQueueLen./lambda), 'r--')
+plot(lambda,(detMeanQueueLen./lambda), 'b--')
+plot(lambda,(expMeanQueueLen(1,:)./lambda), 'c--')
+plot(lambda,(expMeanQueueLen(2,:)./lambda), 'm--')
+% plot(lambda,(geoExpectedQueueLen./lambda),'r--')
+% plot(lambda,(detExpectedQueueLen./lambda),'b--')
+xlabel("\lambda")
+ylabel("L/\lambda (Average Wait Time)")
+title("Geo/Geo/1 vs Geo/D/1 vs Geo/X/1");
+legend("mean simulated delay  (G/G/1)","mean simulated delay (G/D/1)","mean simulated delay (G/X/1,M = 1)","mean simulated delay (G/X/1,M = 5)",'Location','NorthWest');
 hold off;
