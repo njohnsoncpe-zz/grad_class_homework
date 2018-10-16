@@ -3,8 +3,8 @@
 %% Prob #2: Throughput simulation
 T = 1e5;
 N_arr = [40 100];
-TTMA = zeros(numel(N_arr),T); % Total Transmissions Moving Average
-
+STT = zeros(numel(N_arr),T); % Successful Transmissions per Timeslot
+Throughput = zeros(numel(N_arr),T); 
 for idx = 1:numel(N_arr)
     numUser = N_arr(idx);
     P = ones(numUser,T);
@@ -23,17 +23,19 @@ for idx = 1:numel(N_arr)
             P(:,t+1) = 0.8.*P(:,t);
         else
             P(:,t+1) = P(:,t);
+            STT(idx,t) = 1;
+            
         end
-        TTMA(idx,t) = sum(total_transmissions(1,1:t))/t;
+        Throughput(idx,t) = sum(STT(idx,1:t))/t;
     end
-    TTMA(idx,T) = sum(total_transmissions(1,1:T))/T;
+    Throughput(idx,T) = sum(STT(idx,1:T))/T;
 end
 
 %% Prob #2 Throughput Graphing
 t = 1:T;
-plot(t,TTMA(1,:))
+plot(t,Throughput(1,:))
 hold on
-plot(t,TTMA(2,:))
+plot(t,Throughput(2,:))
 xlabel("Time (t)")
 ylabel("Throughput (transmissions/t)")
 title("Running Average of Throughput for N = 40, N = 100")
@@ -168,7 +170,7 @@ title("Geo/Geo/1 vs Geo/D/1 vs Geo/X/1");
 legend("mean simulated queue len (G/G/1)","mean simulated queue len (G/D/1)","mean simulated queue len (G/X/1,M = 1)","mean simulated queue len (G/X/1,M = 5)","mean expected queue len (G/G/1)","mean expected queue len (G/D/1)",'Location','NorthWest');
 hold off;
 
-%% Bonus
+%% Bonus INCORRECT
 subplot(2,1,1)
 hold on;
 plot(lambda,geoMeanQueueLen, 'rx')
