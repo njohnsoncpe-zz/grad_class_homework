@@ -221,4 +221,3 @@ clp2 = eig(A-B*K2)
 %  identical, but this is not enough to say anything about the feasibility
 %  of a hardware test.
 
-
