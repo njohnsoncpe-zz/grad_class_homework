@@ -51,23 +51,6 @@ int main(){
 
 			if (myrand() < Lambda)   /*** calls the arrival routine ***/
 			{ 
-				// geometric file size 
-				// do {
-				// 	xBernoulli = (myrand() < (1.0 / mu));
-				// 	s = s + 1;
-				// } while (xBernoulli == 0);
-				//Deterministic File Size
-				//s = 2;
-				//Markovian File Size
-				/*if (myrand() < ((mu - 1)*1.0 / (M - 1)))
-				{
-					s = M;
-				}
-				else
-				{
-					s = 1;
-				}*/
-
 				Queue.addBack(t, 1);                           // insert the file into the queue
 			}
 
@@ -75,8 +58,6 @@ int main(){
 				/*** calls the departure routine ***/
 			
 			if(myrand() < mu && !Queue.empty())
-			{ 
-				{
 			{ 
 				Queue.removeFront();
 			}

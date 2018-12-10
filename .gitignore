@@ -33,3 +33,5 @@ codegen/
 octave-workspace
 
 # End of https://www.gitignore.io/api/matlab
+ele549/martingale/
+ele549/hw4/.vscode/settings.json
