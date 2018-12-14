@@ -254,7 +254,7 @@ This implies that for any values of $\nu$ and $\mu$, the system will always reac
 however we have not defined it. Let us first define $\mathbb{E}[P^N]$ to be the power usage of the $N^{th}$ server in the system.
 Note that the power usage of an idle-on ("green") server is less than one which is starting up ("orange") or a busy one ("yellow"), while
 an idle-off ("red") server uses 0 Watts. Let us then define $P_{full}$ to be the power used by orange and yellow servers,
-and to be the power used by green servers.
+and $P_{idle}$ to be the power used by green servers.
 \footnote{Note that while yellow servers can be considered to be doing useful work (i.e. processing jobs), green servers can be seen
     as the primary source of wasted energy. This will be important during the proof.} In order for the system to be stable, at least a fraction
 of the total servers $\lambda$ must be on in order to handle the incoming tasks. Thus, the lower bound on energy usage per server is $\lambda P_{full}$.
