@@ -1,10 +1,10 @@
-%% ELE 503 Final Project
-% 
-%  Noah Johnson
+%% ELE/MCE 503 Final Project
+%
+% Noah Johnson
 % 
 
 %% (1) Derivation of SSM for Virtual Plant
-% See attached page for derivation
+% See attached page for derivation.
 
 %% (2) Calculation of feedback gain vector K
 
@@ -107,9 +107,13 @@ delta2 = inv(norm(sys,inf))
 % See attached page for block diagram.
 
 %% (8) Tracking System Design
-% The tracking system gain values (K1 and K2) must be calculated using
-% >>tsd(A,B,C,Aa,Ba,poles,T,place). The A,B,C values are those given for the
-% virtual plant. The Aa and Ba values are defined in (7) to both be 1. The
+% The tracking system gain values (K1 and K2) must be calculated using 
+
+%%
+%   tsd(A,B,C,Aa,Ba,sPoles,T,"place")
+
+%%
+% The A,B,C values are those given for the virtual plant (see models.m). The Aa and Ba values are defined in (7) to both be 1. The
 % selection of the tracking system poles would be as follows:
 % 
 % * We would select 5 poles based on the plant poles, exactly like what we
@@ -120,10 +124,17 @@ delta2 = inv(norm(sys,inf))
 % that is less than s1/Ts, at -4.9664. This will be chosen as the last
 % pole.
 %
-% After this we would run >>tsd() with the values we just found, taking
-% care to use the place algorithm, as the rfbg algorithm will give "good"
-% feedback gain based on the stability roubustness bounds. These are wrong
-% as we will see in (9).
+% Therefore, our overall sPoles vector will be:
+
+%%
+%   sPoles = [-3.8559, -1.5400+1.9504i, -1.5400-1.9504i, -3.5310, -1.5400,
+%   -4.9664];
+
+%%
+% After this we would run >>tsd() with the values we just found, *taking
+% care to use the place algorithm*, as the rfbg algorithm will give "good"
+% feedback gain values only if the stability roubustness bounds can be
+% correctly calulated. This cannot be done with >>tsd() as we will see in (9).
 
 %% (9) tsd Stability Robustness Bounds
 % The stability robustness bounds returned by the tsd command would not be
