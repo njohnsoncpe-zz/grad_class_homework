@@ -110,10 +110,12 @@ delta2 = inv(norm(sys,inf))
 % The tracking system gain values (K1 and K2) must be calculated using 
 
 %%
-%   tsd(A,B,C,Aa,Ba,sPoles,T,"place")
+%   tsd(A,B,C,0,Ba,sPoles,0,"place")
 
 %%
-% The A,B,C values are those given for the virtual plant (see models.m). The Aa and Ba values are defined in (7) to both be 1. The
+% The A,B,C values are those given for the virtual plant (see models.m).
+% The Aa and Ba values are defined in (7) to be 0 and 1 respectively, this 
+% is to satisfy the condition of zero steady state tracking error. The
 % selection of the tracking system poles would be as follows:
 % 
 % * We would select 5 poles based on the plant poles, exactly like what we
@@ -127,7 +129,7 @@ delta2 = inv(norm(sys,inf))
 % Therefore, our overall sPoles vector will be:
 
 %%
-%   sPoles = [-3.8559, -1.5400+1.9504i, -1.5400-1.9504i, -3.5310, -1.5400,
+%   sPoles = [-3.8559, -3.5310, -1.5400+1.9504i, -1.5400-1.9504i, -1.5400,
 %   -4.9664];
 
 %%
