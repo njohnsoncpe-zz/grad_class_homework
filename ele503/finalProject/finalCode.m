@@ -23,6 +23,11 @@ K = place(A,B,sPoles); % Find K using Place
 [d1,d2] = rb_regsf(A,B,K,0) % find stability margins
 
 %% (3) Simulation for x2(0) = 2 degrees
+% The settling time of $x_2(t)$ is very close to that in figure 8 on pg. 30 of
+% [1], as is the case for the plant input, $u(t)$. The graph of $u(t)$ we
+% found is actually nearly identical to that in figure 8. However, the
+% magnitude of the graph of $x_2(t)$ seems to be wrong, though the shape is
+% correct. I was unable to find the cause of this error.
 
 x20 = 2*pi/180;
 yref = 0;
