@@ -1,0 +1,20 @@
+//regular class
+class PaoloVector{
+public:
+  double x;
+  double y;
+}
+
+//template class
+template <class T> class PaoloVector{
+public:
+  T x;
+  T y;
+}
+
+
+int main()
+{
+  PaoloVector<int> p;
+  return 0;
+}
